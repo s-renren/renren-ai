@@ -13,6 +13,7 @@ export const workUseCase = {
       const loadingWork = workMethod.create({ novelUrl, title, author });
 
       await workCommand.save(tx, loadingWork);
+      await s3.PutText(`works/${loadingWork.id}/content.txt`, html);
 
       workEvent.workCreated({ loadingWork, html });
 
