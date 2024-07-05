@@ -6,6 +6,7 @@ type WorkBase = {
   novelUrl: string;
   title: string;
   author: string;
+  contentUrl: string;
   createdTime: number;
 };
 

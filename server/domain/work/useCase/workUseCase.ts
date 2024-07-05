@@ -10,7 +10,7 @@ export const workUseCase = {
   create: (novelUrl: string): Promise<LoadingWorkEntity> =>
     transaction('RepeatableRead', async (tx) => {
       const { title, author, html } = await novelQuery.sccrape(novelUrl);
-      const loadingWork = workMethod.create({ novelUrl, title, author });
+      const loadingWork = await workMethod.create({ novelUrl, title, author });
 
       await workCommand.save(tx, loadingWork);
       await s3.PutText(`works/${loadingWork.id}/content.txt`, html);
@@ -21,7 +21,7 @@ export const workUseCase = {
     }),
   conplete: (loadingWork: LoadingWorkEntity, image: Buffer): Promise<void> =>
     transaction('RepeatableRead', async (tx) => {
-      const completedWork = workMethod.complete(loadingWork);
+      const completedWork = await workMethod.complete(loadingWork);
 
       await workCommand.save(tx, completedWork);
       await s3.putImage(`works/${loadingWork.id}/image.png`, image);

@@ -12,7 +12,7 @@ const main = async (): Promise<void> => {
 
   writeFileSync(filePath, html, 'utf8');
 
-  const loadingWork = workMethod.create({ novelUrl, title, author });
+  const loadingWork =await workMethod.create({ novelUrl, title, author });
   const chatResult = await sendChat(loadingWork, html);
   const imageResult = await genImage(chatResult.imagePrompt);
 
