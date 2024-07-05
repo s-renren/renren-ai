@@ -24,3 +24,13 @@ model Task {
   Author    User     @relation(fields: [authorId], references: [id])
   authorId  String
 }
+
+model Work {
+  id String @id
+  novelUrl String
+  title String
+  author String
+  status String
+  errorMsg String?
+  createdAt DateTime
+}
