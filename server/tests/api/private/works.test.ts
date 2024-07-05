@@ -11,18 +11,12 @@ test(GET(noCookieClient.private.works), async () => {
 
 test(POST(noCookieClient.private.works), async () => {
   const userClient = await createUserClient();
-  const novelUrl = 'https://novel.com/hoge';
-  const title = 'aaaa';
-  const author = 'bbbb';
+  const novelUrl = 'https://www.aozora.gr.jp/cards/000879/files/127_15260.html';
   const res = await userClient.private.works.$post({
-    body: {
-      novelUrl,
-      title,
-      author,
-    },
+    body: { novelUrl },
   });
 
   expect(res.novelUrl).toBe(novelUrl);
-  expect(res.title).toBe(title);
-  expect(res.author).toBe(author);
+  expect(res.title).toBe('羅生門');
+  expect(res.author).toBe('芥川龍之介');
 });
