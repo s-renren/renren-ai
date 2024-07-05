@@ -1,4 +1,4 @@
-import type { CompletedWorkEntity, LoadingWorkEntity } from 'api/@types/work';
+import type { CompletedWorkEntity, FailedWorkEntity, LoadingWorkEntity } from 'api/@types/work';
 import { brandedId } from 'service/brandedId';
 import { ulid } from 'ulid';
 
@@ -20,6 +20,13 @@ export const workMethod = {
       ...loadingWork,
       status: 'completed',
       imageUrl: '',
-    }
-  }
+    };
+  },
+  failure: (loadingWork: LoadingWorkEntity, errorMsg: string): FailedWorkEntity => {
+    return {
+      ...loadingWork,
+      status: 'failed',
+      errorMsg,
+    };
+  },
 };
