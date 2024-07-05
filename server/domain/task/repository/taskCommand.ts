@@ -5,7 +5,7 @@ import type { TaskDeleteVal, TaskSaveVal } from '../model/taskEntity';
 
 export const taskCommand = {
   save: async (tx: Prisma.TransactionClient, val: TaskSaveVal): Promise<void> => {
-    if (val.s3Params !== undefined) await s3.put(val.s3Params);
+    if (val.s3Params !== undefined) await s3.putFile(val.s3Params);
 
     await tx.task.upsert({
       where: { id: val.task.id },
