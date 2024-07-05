@@ -1,3 +1,4 @@
+import type { WORK_STATUSES } from 'api/@constants/index.ts';
 import type { EntityId } from './brandedId';
 
 type WorkBase = {
@@ -9,19 +10,19 @@ type WorkBase = {
 };
 
 export type LoadingWorkEntity = WorkBase & {
-  status: 'loading';
+  status: (typeof WORK_STATUSES)[0];
   imageUrl: null;
   errorMsg: null;
 };
 
 export type CompletedWorkEntity = WorkBase & {
-  status: 'completed';
+  status: (typeof WORK_STATUSES)[1];
   imageUrl: string;
   errorMsg: null;
 };
 
 export type FailedWorkEntity = WorkBase & {
-  status: 'failed';
+  status: (typeof WORK_STATUSES)[2];
   imageUrl: null;
   errorMsg: string;
 };
