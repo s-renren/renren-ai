@@ -1,4 +1,5 @@
 import type { LoadingWorkEntity } from 'api/@types/work';
+import { getContetnKey, getImageKey } from 'service/getS3Key';
 import { transaction } from 'service/prismaClient';
 import { s3 } from 'service/s3Client';
 import { workEvent } from '../event/workEvent';
@@ -13,7 +14,7 @@ export const workUseCase = {
       const loadingWork = await workMethod.create({ novelUrl, title, author });
 
       await workCommand.save(tx, loadingWork);
-      await s3.PutText(`works/${loadingWork.id}/content.txt`, html);
+      await s3.PutText(getContetnKey(loadingWork.id), html);
 
       workEvent.workCreated({ loadingWork, html });
 
@@ -24,7 +25,7 @@ export const workUseCase = {
       const completedWork = await workMethod.complete(loadingWork);
 
       await workCommand.save(tx, completedWork);
-      await s3.putImage(`works/${loadingWork.id}/image.png`, image);
+      await s3.putImage(getImageKey(completedWork.id), image);
     }),
   failure: (loadingWork: LoadingWorkEntity, errorMsg: string): Promise<void> =>
     transaction('RepeatableRead', async (tx) => {
