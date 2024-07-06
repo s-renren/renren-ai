@@ -1,4 +1,4 @@
-export const APP_NAME = 'NEXT FROURIO STARTER';
+export const APP_NAME = 'renren-ai';
 
 export const BRANDED_ID_NAMES = ['user', 'task', 'work'] as const;
 

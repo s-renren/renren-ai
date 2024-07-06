@@ -18,6 +18,12 @@
   }
 }
 
+.contentFrame {
+  position: relative;
+  height: 100%;
+  background: #333a;
+}
+
 .loader {
   position: absolute;
   top: 50%;
