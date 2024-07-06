@@ -33,7 +33,28 @@ export const s3 = {
 
     return await s3Client.send(command).then(() => true);
   },
-  put: async (params: S3PutParams): Promise<void> => {
+  PutText: async (key: string, text: string): Promise<void> => {
+    const command = new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      ContentType: 'text/plain',
+      Key: key,
+      Body: text,
+    });
+
+    await s3Client.send(command);
+  },
+  putImage: async (key: string, image: Buffer): Promise<void> => {
+    const ext = key.split('.').at(-1);
+    const command = new PutObjectCommand({
+      Bucket: S3_BUCKET,
+      ContentType: ext === 'jpg' ? 'img/jpeg' : `image/${ext}`,
+      Key: key,
+      Body: image,
+    });
+
+    await s3Client.send(command);
+  },
+  putFile: async (params: S3PutParams): Promise<void> => {
     const command = new PutObjectCommand({
       Bucket: S3_BUCKET,
       ContentType: params.data.mimetype,

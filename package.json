@@ -15,7 +15,9 @@
     "lint": "run-p lint:*",
     "lint:client": "npm run lint:fix --prefix client",
     "lint:server": "npm run lint:fix --prefix server",
-    "start": "npm start --prefix server",
+    "start": "run-p start:*",
+    "start:client": "npm start --prefix client",
+    "start:server": "npm start --prefix server",
     "test": "run-p test:*",
     "test:client": "npm run test --prefix client",
     "test:server": "npm run test --prefix server",
@@ -43,5 +45,11 @@
   },
   "engines": {
     "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "iconv-lite": "^0.6.3",
+    "openai": "^4.52.1"
   }
 }
