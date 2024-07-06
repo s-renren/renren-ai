@@ -1,11 +1,14 @@
+import { WS_PATH } from 'api/@constants';
 import type { EntityId } from 'api/@types/brandedId';
-import type { WorkEntity } from 'api/@types/work';
+import type { CompletedWorkEntity, FailedWorkEntity, WorkEntity } from 'api/@types/work';
 import { ContentLoading } from 'components/loading/ContentLoading';
 import { Loading } from 'components/loading/Loading';
 import { useCatchApiErr } from 'hooks/useCatchApiErr';
 import type { FormEvent } from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import useWebSocket from 'react-use-websocket';
 import { apiClient } from 'utils/apiClient';
+import { SERVER_PORT } from 'utils/envValues';
 import styles from './works.module.css';
 
 type ContentDict = Record<EntityId['work'], string | undefined>;
@@ -40,6 +43,11 @@ const MainContent = (props: { work: WorkEntity; contentDict: ContentDict }) => {
 
 export const Works = () => {
   const catchApiErr = useCatchApiErr();
+  const { lastMessage } = useWebSocket(
+    process.env.NODE_ENV === 'production'
+      ? `wss://${location.host}${WS_PATH}`
+      : `ws://localhost:${SERVER_PORT}${WS_PATH}`,
+  );
   const [works, setWorks] = useState<WorkEntity[]>();
   const [novelUrl, setNovelUrl] = useState('');
   const [contentDict, setContentDict] = useState<ContentDict>({});
@@ -74,6 +82,19 @@ export const Works = () => {
       })
       .catch(catchApiErr);
   }, [catchApiErr, works, contentDict, fetchContent]);
+
+  useEffect(() => {
+    if (lastMessage === null) return;
+
+    const loadedWork: CompletedWorkEntity | FailedWorkEntity = JSON.parse(lastMessage.data);
+    setWorks((works) =>
+      works?.some((w) => w.id === loadedWork.id)
+        ? works.map((w) => (w.id === loadedWork.id ? loadedWork : w))
+        : [loadedWork, ...(works ?? [])],
+    );
+
+    contentDict[loadedWork.id] === undefined && fetchContent(loadedWork);
+  }, [lastMessage, contentDict, fetchContent]);
 
   if (!works) return <Loading visible />;
 

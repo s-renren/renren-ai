@@ -50,6 +50,7 @@
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.5",
     "iconv-lite": "^0.6.3",
-    "openai": "^4.52.1"
+    "openai": "^4.52.1",
+    "websocket": "^1.0.35"
   }
 }
