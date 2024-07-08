@@ -96,6 +96,16 @@ export const Works = () => {
     contentDict[loadedWork.id] === undefined && fetchContent(loadedWork);
   }, [lastMessage, contentDict, fetchContent]);
 
+  const validationUrl = (url: string) => {
+    const regex = /^https:\/\/www\.aozora\.gr\.jp\/cards\/.*\.html$/;
+    if (regex.test(url)) {
+      setNovelUrl(url);
+    } else {
+      setNovelUrl('');
+      console.log('undirected url')
+    }
+  };
+
   if (!works) return <Loading visible />;
 
   return (
@@ -107,7 +117,7 @@ export const Works = () => {
             className={styles.textInput}
             type="text"
             placeholder="青空文庫の作品ページURL"
-            onChange={(e) => setNovelUrl(e.target.value)}
+            onChange={(e) => validationUrl(e.target.value)}
           />
           <div className={styles.controls}>
             <input className={styles.btn} disabled={novelUrl === ''} type="submit" value="CREATE" />
