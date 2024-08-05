@@ -41,12 +41,20 @@
     "@fastify/websocket": "^10.0.1",
     "@prisma/client": "^5.13.0",
     "aspida": "^1.14.0",
+
     "assert": "^2.1.0",
     "ci": "^2.3.0",
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "get-jwks": "^9.0.1",
     "openai": "^4.52.3",
+
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "get-jwks": "^9.0.1",
+    "iconv-lite": "^0.6.3",
+
     "ulid": "^2.3.0",
     "velona": "^0.8.0",
     "ws": "^8.18.0",
