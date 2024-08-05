@@ -50,9 +50,6 @@
     "openai": "^4.52.3",
 
     "cheerio": "^1.0.0-rc.12",
-    "dotenv": "^16.4.5",
-    "fastify": "^4.26.2",
-    "get-jwks": "^9.0.1",
     "iconv-lite": "^0.6.3",
 
     "ulid": "^2.3.0",
